@@ -5,26 +5,16 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: realtime
+      app: server-demo
   replicas: 5
   template:
     metadata:
       labels:
-        app: realtime
+        app: server-demo
     spec:
       containers:
       - name: realtimeapp
-        image: gbaeke/fluxapp:1.0.2
-        env:
-        - name: REDISHOST
-          value: "redisapp:6379"
-        resources:
-          requests:
-            cpu: 25m
-            memory: 50Mi
-          limits:
-            cpu: 150m
-            memory: 150Mi
+        image: server:blue
         ports:
         - containerPort: 8080
   strategy:
