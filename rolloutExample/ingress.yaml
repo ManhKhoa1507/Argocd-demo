@@ -8,11 +8,13 @@ metadata:
     nginx.ingress.kubernetes.io/affinity-mode: persistent
 spec:
   rules:
-  - host: khoanlm2.demo
+  - host: khoanlm2.demo  #Change to your domain
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
-          serviceName: server-demo
-          servicePort: 80
+          service:
+            name: server-demo
+            port:
+              number: 80
