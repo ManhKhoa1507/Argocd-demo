@@ -1,0 +1,10 @@
+sonarqube:
+   tag:
+     portfolio: portfolio-technology-operation
+     squad: platform
+devClusters: "zlp-k8s-dev-1" # values: zlp-k8s-dev-1 (onprem), aws-k8s-nonprod-1 (aws)
+qcClusters: "zlp-k8s-dev-1" # values: zlp-k8s-dev-1 (onprem), aws-k8s-nonprod-1 (aws)
+stagingClusters: "zlp-k8s-prod-2" # optional, default is "zlp-k8s-prod-2", if has multiple values, separate by comma, e.g: "zlp-k8s-prod-2,aws-k8s-prod-1"
+productionClusters: "zlp-k8s-prod-2" # optional, default is "zlp-k8s-prod-2", if has multiple values, separate by comma, e.g: "zlp-k8s-prod-2,aws-k8s-prod-1"
+serviceProtocols: "http,grpc" # optional, default is "http"
+configType: "yaml" # optional, default is "yaml"
