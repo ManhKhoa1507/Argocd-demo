@@ -13,10 +13,12 @@ spec:
         app: server-demo
     spec:
       containers:
-      - name: realtimeapp
+      - name: server-demo
         image: server:blue
         ports:
         - containerPort: 8080
+      imagePullSecrets: 
+      - name: regcred
   strategy:
     canary:
       canaryService: server-demo-canary
