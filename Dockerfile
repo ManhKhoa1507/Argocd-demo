@@ -1,4 +1,4 @@
-FROM debian:zlp-10 as base
+FROM registry-gitlab.zalopay.vn/docker/images/debian:zlp-10 as base
 # Define User and Group
 ARG USER=zdeploy
 ARG GROUP=zdeploy
@@ -21,9 +21,10 @@ WORKDIR $HOME
 USER $USER
 
 # Build server stage
-FROM golang:1.16 AS builder
+FROM registry-gitlab.zalopay.vn/docker/images/golang:1.16 AS builder
 ENV GO111MODULE=on
 ARG CACHE_DIR=/tmp
+ARG DOCKER_BUILDKIT=1
 # Set the Current Working Directory inside the container
 WORKDIR /cmd
 COPY go.mod .
