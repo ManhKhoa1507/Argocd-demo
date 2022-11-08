@@ -1,38 +1,17 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: server-demo
-  namespace: ingress-controller
-spec:
-  ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-  selector:
-    run: server-demo-app
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    run: server-demo
-  name: server-demo
-  namespace: ingress-controller
+  name: ingress-demo
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      run: server-demo-app
+      app: myapp
+  replicas: 1
   template:
     metadata:
       labels:
-        run: server-demo-app
+        app: myapp
     spec:
       containers:
-      - image: nginx
-        imagePullPolicy: IfNotPresent
-        name: http
-        ports:
-        - containerPort: 80
-          protocol: TCP
-        resources: {}
+      - name: server-demo
+        image: blue/server:1.0
