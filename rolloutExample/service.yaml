@@ -1,17 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: ingress-demo
+  name: ingress
+  labels:
+    name: ingress
 spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
   selector:
-    matchLabels:
-      app: myapp
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-      - name: server-demo
-        image: blue/server:1.0
+    name: ingress
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-canary
+  labels:
+    name: ingress
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    name: ingress
+  type: NodePort

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingress-demo
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      name: ingress
+  template:
+    metadata:
+      labels:
+        name: ingress
+    spec:
+      containers:
+      - name: ingress-demo
+        image: blue/server:1.0
