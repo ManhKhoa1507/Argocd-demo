@@ -18,7 +18,7 @@ spec:
         image: red/server:1.0
   strategy:
     canary:
-      stableService: ingress
+      stableService: ingress-stable
       canaryService: ingress-canary
       steps:
       - setWeight: 20

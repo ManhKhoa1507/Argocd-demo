@@ -13,6 +13,6 @@ spec:
             pathType: Prefix  
             backend:   
               service:
-                name: ingress
+                name: ingress-stable
                 port:
                   number: 8080
