@@ -25,7 +25,7 @@ func handleRequest() {
 func main() {
 
 	Cards = []Card{
-		Card{Color: "Blue"},
+		Card{Color: "Red"},
 	}
 
 	handleRequest()

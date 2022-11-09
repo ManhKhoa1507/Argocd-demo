@@ -1,0 +1,22 @@
+apiVersion: apps/v1alpha1
+kind: Rollout
+metadata:
+  name: app-rollout
+  lables:
+    app: app-rollout
+spec:
+  template:
+    metadata:
+      labels:
+        app: myapp-rollout
+    spec:
+      containers:
+      - name: server-rollout
+        image: red/server:1.0
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: { duration: 30s } 
+      - pause: { duration: 30s } 
+      - pause: { duration: 30s }
