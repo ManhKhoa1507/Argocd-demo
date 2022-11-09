@@ -5,6 +5,10 @@ metadata:
   lables:
     app: app-rollout
 spec:
+  selector:
+    matchLabels:
+      app: myapp-rollout
+  replicas: 1
   template:
     metadata:
       labels:
