@@ -10,7 +10,7 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: ingress
+    name: ingress
 ---
 apiVersion: v1
 kind: Service
@@ -24,4 +24,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: ingress
+    name: ingress

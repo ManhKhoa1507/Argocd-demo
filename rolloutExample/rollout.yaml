@@ -6,7 +6,7 @@ spec:
   replicas: 4
   selector: 
     matchLabels:
-      app: ingress
+      name: ingress
   template:
     metadata:
       labels:
