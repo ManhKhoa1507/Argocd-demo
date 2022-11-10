@@ -2,16 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: ingress-rollout
+  labels:
+    app: ingress
 spec:
   replicas: 5
-  revisionHistoryLimit: 1
   selector: 
     matchLabels:
-      app: ingress-rollout
+      app: ingress
   template:
     metadata:
       labels:
-        app: ingress-rollout
+        app: ingress
     spec:
       containers:
       - name: ingress-rollout
