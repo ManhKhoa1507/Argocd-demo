@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: ingress
+        name: ingress
     spec:
       containers:
       - name: ingress-demo
