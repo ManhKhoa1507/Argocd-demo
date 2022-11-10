@@ -13,5 +13,5 @@ spec:
         name: ingress
     spec:
       containers:
-      - name: ingress-demo
+      - name: ingress-blue
         image: blue/server:1.0

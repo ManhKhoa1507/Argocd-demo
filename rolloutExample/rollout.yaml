@@ -13,7 +13,7 @@ spec:
         name: ingress
     spec:
       containers:
-      - name: ingress-demo
+      - name: ingress-red
         image: red/server:1.0
   strategy:
     canary:
