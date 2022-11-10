@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: ingressapp
+  name: ingress-app
   labels:
     app: ingress
 spec:
@@ -19,8 +19,8 @@ spec:
         image: red/server:1.0
   strategy:
     canary:
-      stableService: ingressapp-stable
-      canaryService: ingressapp-canary
+      stableService: ingress-app-stable
+      canaryService: ingress-app-canary
       steps:
       - setWeight: 20
       - pause: { duration: 30}

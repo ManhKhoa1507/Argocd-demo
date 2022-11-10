@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingressapp-stable
+  name: ingress-app-stable
   labels:
     app: ingress
 spec:
@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingressapp-canary
+  name: ingress-app-canary
   labels:
     app: ingress
 spec:
