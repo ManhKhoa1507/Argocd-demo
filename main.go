@@ -1,10 +1,76 @@
 package main
 
 import (
-	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"encoding/json"
+	"strconv"
+
+	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+type responseWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+func newResponseWriter(w http.ResponseWriter) *responseWriter {
+	return &responseWriter{w, http.StatusOK}
+}
+
+func (rw *responseWriter) WriteHeader(code int) {
+	rw.statusCode = code
+	rw.ResponseWriter.WriteHeader(code)
+}
+
+var totalRequests = prometheus.NewCounterVec(
+	prometheus.CounterOpts{
+		Name: "http_requests_total",
+		Help: "Number of get requests.",
+	},
+	[]string{"path"},
+)
+
+var responseStatus = prometheus.NewCounterVec(
+	prometheus.CounterOpts{
+		Name: "response_status",
+		Help: "Status of HTTP response",
+	},
+	[]string{"status"},
+)
+
+var httpDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
+	Name: "http_response_time_seconds",
+	Help: "Duration of HTTP requests.",
+}, []string{"path"})
+
+func prometheusMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		route := mux.CurrentRoute(r)
+		path, _ := route.GetPathTemplate()
+
+		timer := prometheus.NewTimer(httpDuration.WithLabelValues(path))
+		rw := newResponseWriter(w)
+		next.ServeHTTP(rw, r)
+
+		statusCode := rw.statusCode
+
+		responseStatus.WithLabelValues(strconv.Itoa(statusCode)).Inc()
+		totalRequests.WithLabelValues(path).Inc()
+
+		timer.ObserveDuration()
+	})
+}
+
+func init() {
+	prometheus.Register(totalRequests)
+	prometheus.Register(responseStatus)
+	prometheus.Register(httpDuration)
+}
 
 type Card struct {
 	Color string `json:"Color"`
@@ -12,21 +78,27 @@ type Card struct {
 
 var Cards []Card
 
-func returnSuccess(w http.ResponseWriter, r *http.Request) {
+func returnTeamCard(w http.ResponseWriter, r *http.Request) {
+	Cards = []Card{
+		Card{Color:"Red"},
+	}
+
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(Cards)
 }
 
-func handleRequest() {
-	http.HandleFunc("/", returnSuccess)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
 
 func main() {
+	router := mux.NewRouter()
+	router.Use(prometheusMiddleware)
 
-	Cards = []Card{
-		Card{Color: "Blue"},
-	}
+	// Prometheus endpoint
+	router.Path("/metrics").Handler(promhttp.Handler())
 
-	handleRequest()
+	// Prometheus endpoint
+	router.HandleFunc("/", returnTeamCard)
+
+	fmt.Println("Serving requests on port 8080")
+	err := http.ListenAndServe(":8080", router)
+	log.Fatal(err)
 }

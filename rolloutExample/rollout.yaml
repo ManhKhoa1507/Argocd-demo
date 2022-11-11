@@ -11,16 +11,32 @@ spec:
     metadata:
       labels:
         name: ingress
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8080"
+        linkerd.io/inject: enabled
     spec:
       containers:
-      - name: ingress-red
-        image: red/server:1.0
+      - name: ingress-blue
+        image: blue/server:1.0
   strategy:
     canary:
       stableService: ingress-app-stable
       canaryService: ingress-app-canary
+      canaryMetadata:
+        annotations:
+          role: canary
+        labels:
+          role: canary
+      analysis: 
+        templates:
+        - templateName: webcheck
+        args:
+        - name: host
+          value: ingress-app
       steps:
-      - setWeight: 10
-      - pause: { duration: 60}
-      - setWeight: 10
+      - setWeight: 20
+      - pause: { duration: 30}
+      - setWeight: 20
       - pause: { duration: 30}

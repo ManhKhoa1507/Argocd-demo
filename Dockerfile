@@ -28,9 +28,11 @@ ARG DOCKER_BUILDKIT=1
 # Set the Current Working Directory inside the container
 WORKDIR /cmd
 COPY go.mod .
-# COPY go.sum .
-# Run go mod download
-RUN go mod download
+COPY go.sum .
+# RUN go get -u github.com/google/go-cmp
+# RUN go get ./...
+# # Run go mod download
+# RUN go mod download
 COPY . .
 # Build Go app
 RUN --mount=type=cache,id=cache-go,target=$CACHE_DIR/.cache CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o simpleServer *.go
