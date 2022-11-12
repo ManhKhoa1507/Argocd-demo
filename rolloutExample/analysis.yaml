@@ -4,7 +4,7 @@ metadata:
   name: webcheck
 spec:
   args:
-  - name: host
+  - name: service-name
   metrics:
   - name: web-check
     interval: 2m
@@ -15,4 +15,4 @@ spec:
     provider:
       prometheus:
         address: http://prometheus-server:80
-        query: sum(response_status{app="{{arg.host}}",status=~"2.*"})/sum(response_status{app="{{arg.host}}"})
+        query: sum(response_status{app="{{args.service-name}}",role="canary",status=~"2.*"})/sum(response_status{app="{{args.service-name}}",role="canary"})
