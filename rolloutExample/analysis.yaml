@@ -3,10 +3,10 @@ kind: AnalysisTemplate
 metadata:
   name: webcheck
 spec:
-  args:
-  - name: service-name
+  # args:
+  # - name: service-name
   metrics:
-  - name: success-rate
+  - name: web-check
     interval: 2m
     count: 2
     # NOTE: prometheus queries return results in the form of a vector.
