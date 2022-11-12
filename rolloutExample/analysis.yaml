@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
-  name: success-rate
+  name: webcheck
 spec:
   args:
   - name: service-name
