@@ -34,7 +34,7 @@ spec:
         - templateName: webcheck
         args:
         - name: host
-          value: ingress-app
+          value: khoanlm2.local
       steps:
       - setWeight: 20
       - pause: { duration: 30}
