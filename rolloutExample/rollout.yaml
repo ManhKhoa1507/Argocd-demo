@@ -38,10 +38,6 @@ spec:
           value: ingress
       steps:
       - setWeight: 10
-      - setCanaryScale:
-          weight: 25
       - pause: {duration: 30}
       - setWeight: 33
-      - setCanaryScale:
-          weight: 50
       - pause: {duration: 30}
