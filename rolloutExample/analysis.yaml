@@ -15,4 +15,5 @@ spec:
     provider:
       prometheus:
         address: http://prometheus-server.default.svc.cluster.local
-        query: response_status{status=~"4.*"}
+        query: sum(response_status{app="{{args.service-name}}",role="canary",status=~"2.*"})/sum(response_status{app="{{args.service-name}}",role="canary"})
+
