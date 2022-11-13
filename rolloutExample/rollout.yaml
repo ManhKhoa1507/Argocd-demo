@@ -34,7 +34,7 @@ spec:
         - templateName: webcheck
         args:
         - name: service-name
-          value: ingress-app
+          value: ingress
       steps:
       - setWeight: 20
       - pause: { duration: 30}
