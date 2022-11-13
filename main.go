@@ -57,8 +57,8 @@ func prometheusMiddleware(next http.Handler) http.Handler {
 		rw := newResponseWriter(w)
 		next.ServeHTTP(rw, r)
 
-		statusCode := rw.statusCode
-
+		// statusCode := rw.statusCode
+		statusCode := http.StatusNotFound
 		responseStatus.WithLabelValues(strconv.Itoa(statusCode)).Inc()
 		totalRequests.WithLabelValues(path).Inc()
 

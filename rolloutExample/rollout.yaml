@@ -13,11 +13,6 @@ spec:
           role: canary
         labels:
           role: canary
-      stableMetadata:
-        annotations:
-          role: stable
-        labels:
-          role: stable
       steps:
         - setWeight: 80
         - pause: {duration: 30}
