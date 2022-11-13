@@ -4,22 +4,6 @@ metadata:
   name: ingress-app
 spec:
   replicas: 4
-  selector: 
-    matchLabels:
-      name: ingress
-  template:
-    metadata:
-      labels:
-        name: ingress
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/metrics"
-        prometheus.io/port: "8080"
-        linkerd.io/inject: enabled
-    spec:
-      containers:
-      - name: ingress-blue
-        image: blue/server:1.0
   strategy:
     canary:
       stableService: ingress-app-stable
@@ -46,3 +30,19 @@ spec:
       - pause: {duration: 30}
       - setWeight: 15
       - pause: {duration: 30}
+  selector: 
+    matchLabels:
+      name: ingress
+  template:
+    metadata:
+      labels:
+        name: ingress
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8080"
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - name: ingress-blue
+        image: blue/server:1.0
