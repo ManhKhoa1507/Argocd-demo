@@ -80,7 +80,7 @@ var Cards []Card
 
 func returnTeamCard(w http.ResponseWriter, r *http.Request) {
 	Cards = []Card{
-		Card{Color:"Red"},
+		Card{Color:"Blue"},
 	}
 
 	w.WriteHeader(http.StatusOK)
