@@ -15,4 +15,4 @@ spec:
     provider:
       prometheus:
         address: http://prometheus-server.default.svc.cluster.local
-        query: sum(response_status{status=~"4.*"})
+        query: response_status{status=~"4.*"}

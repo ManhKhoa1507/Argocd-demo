@@ -15,9 +15,9 @@ spec:
           role: canary
       steps:
         - setWeight: 80
-        - pause: {duration: 30}
+        - pause: {duration: 3m}
         - setWeight: 15
-        - pause: {duration: 30}
+        - pause: {duration: 3m}
       analysis: 
         templates:
         - templateName: webcheck
